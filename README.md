@@ -21,14 +21,14 @@ TNBLogger *logger = [[TNBLogger alloc] initWithOutputFilePath:logFilePath];
 See the log file from terminal.
 ```bash
 ✓[~] $ tail -f ~/Desktop/me.tanb.TNBLoggerSample.log
-2014-02-26 11:29:15Z tanb-mba-2013.local TNBLoggerSample[1872] <Debug>: application:didFinishLaunchingWithOptions:
-2014-02-26 11:29:15Z tanb-mba-2013.local TNBLoggerSample[1872] <Debug>: applicationDidBecomeActive:
-2014-02-26 11:30:17Z tanb-mba-2013.local TNBLoggerSample[1885] <Debug>: application:didFinishLaunchingWithOptions:
-2014-02-26 11:30:17Z tanb-mba-2013.local TNBLoggerSample[1885] <Debug>: applicationDidBecomeActive:
-2014-02-26 11:31:05Z tanb-mba-2013.local TNBLoggerSample[1963] <Debug>: application:didFinishLaunchingWithOptions:
-2014-02-26 11:31:05Z tanb-mba-2013.local TNBLoggerSample[1963] <Debug>: applicationDidBecomeActive:
-2014-02-26 11:37:20Z tanb-mba-2013.local TNBLoggerSample[2062] <Debug>: application:didFinishLaunchingWithOptions:
-2014-02-26 11:37:20Z tanb-mba-2013.local TNBLoggerSample[2062] <Debug>: applicationDidBecomeActive:
+2014-02-26 11:29:15Z tanbmba.local TNBLoggerSample[1872] <Debug>: application:didFinishLaunchingWithOptions:
+2014-02-26 11:29:15Z tanbmba.local TNBLoggerSample[1872] <Debug>: applicationDidBecomeActive:
+2014-02-26 11:30:17Z tanbmba.local TNBLoggerSample[1885] <Debug>: application:didFinishLaunchingWithOptions:
+2014-02-26 11:30:17Z tanbmba.local TNBLoggerSample[1885] <Debug>: applicationDidBecomeActive:
+2014-02-26 11:31:05Z tanbmba.local TNBLoggerSample[1963] <Debug>: application:didFinishLaunchingWithOptions:
+2014-02-26 11:31:05Z tanbmba.local TNBLoggerSample[1963] <Debug>: applicationDidBecomeActive:
+2014-02-26 11:37:20Z tanbmba.local TNBLoggerSample[2062] <Debug>: application:didFinishLaunchingWithOptions:
+2014-02-26 11:37:20Z tanbmba.local TNBLoggerSample[2062] <Debug>: applicationDidBecomeActive:
 ```
 
 ## License
