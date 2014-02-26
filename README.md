@@ -31,5 +31,17 @@ See the log file from terminal.
 2014-02-26 11:37:20Z tanbmba.local TNBLoggerSample[2062] <Debug>: applicationDidBecomeActive:
 ```
 
+## Tips
+
+Useful macro.
+```
+#ifdef DEBUG
+#define DLog(fmt, ...) [gLogger debug:(@"[Line %d] %s " fmt), __LINE__, __PRETTY_FUNCTION__, ##__VA_ARGS__];
+#else
+#define DLog(...)
+#endif
+```
+
+
 ## License
 TNBLogger is available under the MIT license. See the LICENSE file for more info.
