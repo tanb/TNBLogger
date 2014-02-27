@@ -17,6 +17,7 @@
 @property (nonatomic) uint32_t options;
 @property (nonatomic) int severityFilterMask;
 @property (nonatomic) NSString *outputFilePath;
+@property (nonatomic) NSString *outputFileLogFormat;
 
 - (aslclient)currentASLClientRef;
 - (void)logWithLevel:(int)aslLevel format:(NSString *)format arguments:(va_list)arguments;
@@ -52,6 +53,7 @@
                                                   facility:appBundleID
                                                    options:ASL_OPT_STDERR | ASL_OPT_NO_DELAY | ASL_OPT_NO_REMOTE];
     _outputFilePath = filePath;
+    _outputFileLogFormat = @"$(Time) $(Sender) [$(PID)] <$((Level)(str))>: $Message";
     return self;
 }
 
@@ -247,7 +249,7 @@
         // The feature which adapting filter mask to each output file
         // is available from MAC_10_9 and IPHONE_7_0.
         err = asl_add_output_file(_aslclientRef, descriptor,
-                                  ASL_MSG_FMT_STD,
+                                  [logger.outputFileLogFormat UTF8String],
                                   ASL_TIME_FMT_UTC,
                                   logger.severityFilterMask,
                                   ASL_ENCODE_SAFE);
