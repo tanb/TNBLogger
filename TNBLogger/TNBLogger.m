@@ -24,7 +24,7 @@
 
 
 @interface _TNBASLClient : NSObject
-@property (nonatomic, assign) aslclient aslclientRef;
+@property (nonatomic) aslclient aslclientRef;
 
 - (id)initWithLogger:(TNBLogger *)logger outputFileDescriptor:(int)descriptor
             facility:(NSString *)facility options:(uint32_t)options;
@@ -40,6 +40,9 @@
     int fileDescriptor = open([filePath fileSystemRepresentation], O_CREAT | O_WRONLY | O_APPEND, S_IRUSR | S_IWUSR);
 
     if (fileDescriptor == -1) {
+#if DEBUG
+        NSLog(@"[TNBLogger] can't open file: %@", filePath);
+#endif
         return nil;
     }
 #if DEBUG
