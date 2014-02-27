@@ -17,7 +17,6 @@
 @property (nonatomic) uint32_t options;
 @property (nonatomic) int severityFilterMask;
 @property (nonatomic) NSString *outputFilePath;
-@property (nonatomic) NSString *outputFileLogFormat;
 
 - (aslclient)currentASLClientRef;
 - (void)logWithLevel:(int)aslLevel format:(NSString *)format arguments:(va_list)arguments;

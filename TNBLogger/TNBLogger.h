@@ -10,6 +10,10 @@
 #import <asl.h>
 
 @interface TNBLogger : NSObject
+/* outputFileLogFormat. Default is @"$(Time) $(Sender) [$(PID)] <$((Level)(str))>: $Message".
+ See also asl(3) https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man3/asl.3.html
+ */
+@property (nonatomic) NSString *outputFileLogFormat;
 
 - (id)initWithOutputFilePath:(NSString *)filePath;
 
