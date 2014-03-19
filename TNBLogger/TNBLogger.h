@@ -15,7 +15,18 @@
  */
 @property (nonatomic) NSString *outputFileLogFormat;
 
-- (id)initWithOutputFilePath:(NSString *)filePath;
+
+/*
+ #define ASL_LEVEL_EMERG   0
+ #define ASL_LEVEL_ALERT   1
+ #define ASL_LEVEL_CRIT    2
+ #define ASL_LEVEL_ERR     3
+ #define ASL_LEVEL_WARNING 4
+ #define ASL_LEVEL_NOTICE  5
+ #define ASL_LEVEL_INFO    6
+ #define ASL_LEVEL_DEBUG   7
+ */
+- (id)initWithOutputFilePath:(NSString *)filePath filterLevel:(int)filterLevel;
 
 #pragma mark - Logging methods
 - (void)emergency:(NSString *)message, ...;

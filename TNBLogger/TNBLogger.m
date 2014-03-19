@@ -17,6 +17,7 @@
 @property (nonatomic) uint32_t options;
 @property (nonatomic) int severityFilterMask;
 @property (nonatomic) NSString *outputFilePath;
+@property (nonatomic) int filterLevel;
 
 - (aslclient)currentASLClientRef;
 - (void)logWithLevel:(int)aslLevel format:(NSString *)format arguments:(va_list)arguments;
@@ -34,7 +35,7 @@
 
 @implementation TNBLogger
 
-- (id)initWithOutputFilePath:(NSString *)filePath
+- (id)initWithOutputFilePath:(NSString *)filePath filterLevel:(int)filterLevel
 {
     NSString *appBundleID = [[[NSBundle mainBundle] infoDictionary] objectForKey:(id)kCFBundleIdentifierKey];
     int fileDescriptor = open([filePath fileSystemRepresentation], O_CREAT | O_WRONLY | O_APPEND, S_IRUSR | S_IWUSR);
@@ -49,7 +50,9 @@
 #endif
     self = [[TNBLogger alloc] initWithOutputFileDescriptor:fileDescriptor
                                                   facility:appBundleID
+                                               filterLevel:filterLevel
                                                    options:ASL_OPT_STDERR | ASL_OPT_NO_DELAY | ASL_OPT_NO_REMOTE];
+    _filterLevel = filterLevel;
     _outputFilePath = filePath;
     _outputFileLogFormat = @"$(Time) $(Sender) [$(PID)] <$((Level)(str))>: $Message";
     return self;
@@ -57,6 +60,7 @@
 
 - (id)initWithOutputFileDescriptor:(int)descriptor
                           facility:(NSString *)facility
+                       filterLevel:(int)filterLevel
                            options:(uint32_t)options
 {
 	self = [super init];
@@ -67,7 +71,7 @@
     _ASLClientCache = [NSCache new];
 
 #if DEBUG
-    _severityFilterMask = ASL_FILTER_MASK_UPTO(ASL_LEVEL_DEBUG);
+    _severityFilterMask = ASL_FILTER_MASK_UPTO(filterLevel);
 #else
     _severityFilterMask = ASL_FILTER_MASK_UPTO(ASL_LEVEL_NOTICE);
 #endif
@@ -97,6 +101,8 @@
 
 - (void)logWithLevel:(int)aslLevel format:(NSString *)format arguments:(va_list)arguments
 {
+    if (aslLevel > self.filterLevel) return;
+
     if (format == nil) return;
     
     aslclient aslclient = [self currentASLClientRef];
@@ -259,7 +265,9 @@
 #endif
         }
     } else {
+#if DEBUG
         NSLog(@"broken file descriptor. descriptor: %d", descriptor);
+#endif
     }
     
 	return self;
