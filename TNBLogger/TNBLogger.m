@@ -43,7 +43,6 @@
 #if DEBUG
         NSLog(@"[TNBLogger] can't open file: %@", filePath);
 #endif
-        return nil;
     }
 #if DEBUG
     NSLog(@"[TNBLogger] log file location: %@", filePath);
@@ -241,23 +240,26 @@
 #else
     float unavailableVersion = NSFoundationVersionNumber10_8_4;
 #endif
-    
-    if (versionNumber <= unavailableVersion) {
-        err = asl_add_log_file(_aslclientRef, descriptor);
-    } else {
-        // The feature which adapting filter mask to each output file
-        // is available from MAC_10_9 and IPHONE_7_0.
-        err = asl_add_output_file(_aslclientRef, descriptor,
-                                  [logger.outputFileLogFormat UTF8String],
-                                  ASL_TIME_FMT_UTC,
-                                  logger.severityFilterMask,
-                                  ASL_ENCODE_SAFE);
-    }
-    
-    if (err != 0) {
+    if (descriptor != -1) {
+        if (versionNumber <= unavailableVersion) {
+            err = asl_add_log_file(_aslclientRef, descriptor);
+        } else {
+            // The feature which adapting filter mask to each output file
+            // is available from MAC_10_9 and IPHONE_7_0.
+            err = asl_add_output_file(_aslclientRef, descriptor,
+                                      [logger.outputFileLogFormat UTF8String],
+                                      ASL_TIME_FMT_UTC,
+                                      logger.severityFilterMask,
+                                      ASL_ENCODE_SAFE);
+        }
+        
+        if (err != 0) {
 #if DEBUG
-        NSLog (@"asl_add_log_file failed. descriptor: %d", descriptor);
+            NSLog (@"asl_add_log_file failed. descriptor: %d", descriptor);
 #endif
+        }
+    } else {
+        NSLog(@"broken file descriptor. descriptor: %d", descriptor);
     }
     
 	return self;
