@@ -19,7 +19,7 @@ TNBLogger *logger;
     NSString *fileName = [NSString stringWithFormat:@"%@.log", appBundleID];
     NSString *logFilePath = [logPath stringByAppendingPathComponent:fileName];
 #if DEBUG
-    logger = [[TNBLogger alloc] initWithOutputFilePath:logFilePath];
+    logger = [[TNBLogger alloc] initWithOutputFilePath:logFilePath filterLevel:ASL_LEVEL_DEBUG];
 #else
     logger = nil;
 #endif
